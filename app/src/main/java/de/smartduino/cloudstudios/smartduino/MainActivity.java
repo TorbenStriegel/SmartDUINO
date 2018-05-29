@@ -40,6 +40,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+        menu.add(R.id.group1,0,0,"Test");
+        menu.add(R.id.group1,0,1,"Test2");
+        Menu submenu = menu.addSubMenu("Geräte");
+
+        submenu.add("Item1");
+        submenu.add("Item2");
+        submenu.add("Item3");
+
+
     }
 
     @Override
