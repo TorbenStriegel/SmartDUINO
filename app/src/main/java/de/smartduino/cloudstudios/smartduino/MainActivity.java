@@ -1,9 +1,14 @@
 package de.smartduino.cloudstudios.smartduino;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -53,8 +58,14 @@ public class MainActivity extends AppCompatActivity
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
+    }
 
-
+    public void onClick(View view) {
+        Fragment fragment = null;
+        FragmentManager manager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_fragment, new Licht());
+        transaction.commit();
     }
 
     private CharSequence menuIconWithText(Drawable r, String title) {
@@ -115,9 +126,18 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        }*/ if (id == R.id.nav_send) {
 
-        }*/
+             FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new Steckdose());
+            transaction.remove(new Licht());
+            transaction.addToBackStack(null);
+            transaction.commit();
+            /*Steckdose fragment = new Steckdose();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.main_fragment, fragment).commit();*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
