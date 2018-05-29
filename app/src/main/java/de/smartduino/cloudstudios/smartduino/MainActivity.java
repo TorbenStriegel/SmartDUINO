@@ -49,17 +49,17 @@ public class MainActivity extends AppCompatActivity
         //menu.add(R.id.group1,0,0,"Test");
         Menu submenu = menu.addSubMenu("Geräte");
 
-        submenu.add("Item1");
-        submenu.add("Item2");
-        submenu.add("Item3");
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.ic_menu_send), "Hi"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht1"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
 
 
     }
 
     private CharSequence menuIconWithText(Drawable r, String title) {
 
-        r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
+        r.setBounds(0, 0, 100, 100);
         SpannableString sb = new SpannableString("    " + title);
         ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
