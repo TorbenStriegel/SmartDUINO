@@ -19,12 +19,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Switch
-            android:id="@+id/switch1"
+        <TextView
+            android:id="@+id/textView_steckdose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Switch" />
+            android:lineSpacingExtra="8sp"
+            android:text="Steckdose 1"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Power" />
+
     </LinearLayout>
 
 </FrameLayout>

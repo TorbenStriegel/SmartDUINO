@@ -25,6 +25,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String[] geraetenamen = new String[3];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Hi Du EI", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -46,33 +48,35 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+//-------------------------------------------------------------------------------------------------------------------------------------
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        geraetenamen[0] = "Licht";
+        geraetenamen[1] = "Licht";
+        geraetenamen[2] = "Licht";
+
         Menu menu = navigationView.getMenu();
         //menu.add(R.id.group1,0,0,"Test");
         Menu submenu = menu.addSubMenu("Geräte");
+        for (int a = 0;a<geraetenamen.length;a++ ){
+            submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.licht), geraetenamen[a]));
+        }
 
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht1"));
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
+
+        /*submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));*/
+
+//-------------------------------------------------------------------------------------------------------------------------------------
     }
 
-    public void onClick(View view) {
-        Fragment fragment = null;
-        FragmentManager manager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.main_fragment, new Licht());
-        transaction.commit();
-    }
+    private CharSequence menuIconWithText(Drawable icon, String title) {                            // ICON und TEXT zusammenfügen
 
-    private CharSequence menuIconWithText(Drawable r, String title) {
-
-        r.setBounds(0, 0, 100, 100);
+        icon.setBounds(0, 0, 100, 100);
         SpannableString sb = new SpannableString("    " + title);
-        ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
+        ImageSpan imageSpan = new ImageSpan(icon, ImageSpan.ALIGN_BOTTOM);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return sb;
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        }*/ if (id == R.id.nav_send) {
+        }*/ if (id == 1) {
 
              FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
