@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+        if (true){
+            Intent newArduiono = new Intent(this, NewArduino_Activity.class);
+            startActivity(newArduiono);
+        }
 
         /*submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
@@ -82,8 +85,8 @@ public class MainActivity extends AppCompatActivity
         int a = 0;
         if(httpScanner.myDevices != null) {
             for (Device dev : httpScanner.myDevices) {
-                if (dev.getClass() == new Steckdose(0, null,null).getClass()) Log.d("","tetasjgd");
-                submenu.add(0, a, a++, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung),dev.name));
+                if (dev.getClass() == new Steckdose(0, null,null).getClass())
+                submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung),dev.name));
             }
         }
     }
