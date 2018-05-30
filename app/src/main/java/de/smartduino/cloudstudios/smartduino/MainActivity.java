@@ -123,9 +123,25 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        if (id == R.id.action_neuesGerät) {
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new NewDevice_Fragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else if (id == R.id.action_settings) {
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new Settings_Fragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else if (id == R.id.action_impressum) {
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new Impressum_Fragment());
+            transaction.addToBackStack(null);
+            transaction.commit();}
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -150,8 +166,7 @@ public class MainActivity extends AppCompatActivity
 
              FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.main_fragment, new Licht());
-            transaction.remove(new Licht());
+            transaction.replace(R.id.main_fragment, new Steckdose_Fragment());
             transaction.addToBackStack(null);
             transaction.commit();
             /*Steckdose fragment = new Steckdose();

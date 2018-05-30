@@ -5,9 +5,33 @@
     <string name="nav_header_title">SmartDUINO</string>
     <string name="nav_header_subtitle">Nils,Torben,Niklas</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_impressum">Impressum</string>
+    <string name="action_newDevice">Neues Gerät</string>
+
+
     <string name="title_activity_light">Light</string>
+
+    <string name="impressum">
+        Torben Striegel
+        \nLerchenstraße 33
+        \n79211 Denzlingen
+        \nGermany
+        \nEmail: torben.striegel@gmail.com
+        \n\nDatenschutzerklärung\n\n
+        Geltungsbereich\n
+        Diese Datenschutzerklärung klärt Nutzer über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener Daten durch den verantwortlichen Anbieter [Torben Striegel] auf dieser Website (im folgenden “Angebot”) auf.
+        Die rechtlichen Grundlagen des Datenschutzes finden sich im Bundesdatenschutzgesetz (BDSG) und dem Telemediengesetz (TMG).
+        \n\nKontaktaufnahme\n
+        Bei der Kontaktaufnahme mit dem Anbieter (zum Beispiel per Kontaktformular oder E-Mail) werden die Angaben des Nutzers zwecks Bearbeitung der Anfrage sowie für den Fall, dass Anschlussfragen entstehen, gespeichert.Es werden keinerlei Daten an Dritte weiter gegeben.
+        \n\nKommentare und Beiträge\n
+        Wenn Nutzer Kommentare im Blog oder sonstige Beiträge hinterlassen, werden ihre IP-Adressen gespeichert. Das erfolgt zur Sicherheit des Anbieters, falls jemand in Kommentaren und Beiträgen widerrechtliche Inhalte schreibt (Beleidigungen, verbotene politische Propaganda, etc.). In diesem Fall kann der Anbieter selbst für den Kommentar oder Beitrag belangt werden und ist daher an der Identität des Verfassers interessiert.
+        \n\nWiderruf, Änderungen, Berichtigungen und Aktualisierungen\n
+        Der Nutzer hat das Recht, auf Antrag unentgeltlich Auskunft zu erhalten über die personenbezogenen Daten, die über ihn gespeichert wurden. Zusätzlich hat der Nutzer das Recht auf Berichtigung unrichtiger Daten, Sperrung und Löschung seiner personenbezogenen Daten, soweit dem keine gesetzliche Aufbewahrungspflicht entgegensteht.
+        \n\n\n\n\n
+</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_new_arduino_">NewArduino_Activity</string>
 </resources>

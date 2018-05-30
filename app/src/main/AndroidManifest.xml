@@ -12,9 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -28,6 +25,10 @@
         <activity
             android:name=".Light"
             android:label="@string/title_activity_light"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewArduino_Activity"
+            android:label="@string/title_activity_new_arduino_"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
