@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String[] geraetenamen = new String[3];
+    ScanHttp httpScanner ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +50,19 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+          httpScanner = new ScanHttp(this);
+
 //-------------------------------------------------------------------------------------------------------------------------------------
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
         geraetenamen[0] = "Licht";
         geraetenamen[1] = "Licht";
         geraetenamen[2] = "Licht";
+        Log.d("","tetasjgd");
 
-        Menu menu = navigationView.getMenu();
-        //menu.add(R.id.group1,0,0,"Test");
-        Menu submenu = menu.addSubMenu("Geräte");
-        for (int a = 0;a<geraetenamen.length;a++ ){
-            submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.licht), geraetenamen[a]));
-        }
+
+
 
 
         /*submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
@@ -70,6 +70,22 @@ public class MainActivity extends AppCompatActivity
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));*/
 
 //-------------------------------------------------------------------------------------------------------------------------------------
+    }
+
+
+    void submenUE(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        Menu menu = navigationView.getMenu();
+        //menu.add(R.id.group1,0,0,"Test");
+        Menu submenu = menu.addSubMenu("Geräte");
+        int a = 0;
+        if(httpScanner.myDevices != null) {
+            for (Device dev : httpScanner.myDevices) {
+                if (dev.getClass() == new Steckdose(0, null,null).getClass()) Log.d("","tetasjgd");
+                submenu.add(0, a, a++, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung),dev.name));
+            }
+        }
     }
 
     private CharSequence menuIconWithText(Drawable icon, String title) {                            // ICON und TEXT zusammenfügen
@@ -134,7 +150,7 @@ public class MainActivity extends AppCompatActivity
 
              FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.main_fragment, new Steckdose());
+            transaction.replace(R.id.main_fragment, new Licht());
             transaction.remove(new Licht());
             transaction.addToBackStack(null);
             transaction.commit();

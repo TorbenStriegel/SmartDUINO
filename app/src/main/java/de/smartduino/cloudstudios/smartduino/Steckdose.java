@@ -1,37 +1,14 @@
 package de.smartduino.cloudstudios.smartduino;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 
+public class Steckdose extends Device {
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Steckdose.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Steckdose#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Steckdose extends Fragment {
-
-    public Steckdose() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_steckdose, container, false);
-    }
+	public Steckdose(int p_id , String p_name, boolean[] p_states) {
+        Log.d("","Steckdose Konstruktor");
+		id = p_id;
+		name = p_name;
+		states = p_states;
+	}
+	
 }
