@@ -67,10 +67,17 @@ public class MainActivity extends AppCompatActivity
             Intent newArduiono = new Intent(this, NewArduino_Activity.class);
             startActivity(newArduiono);
         }
-
-        /*submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
+        /*
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        Menu menu = navigationView.getMenu();
+        Menu submenu = menu.addSubMenu("Geräte");
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht1"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht3"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));*/
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
+        */
 
 //-------------------------------------------------------------------------------------------------------------------------------------
     }
@@ -80,7 +87,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menu = navigationView.getMenu();
-        //menu.add(R.id.group1,0,0,"Test");
         Menu submenu = menu.addSubMenu("Geräte");
         int a = 0;
         if(httpScanner.myDevices != null) {
