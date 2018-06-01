@@ -78,6 +78,8 @@ public class ScanHttp {
 
 
 
+
+
     }
 
     void setIpAddr(InetAddress p_ipAddr) {
@@ -197,7 +199,7 @@ public class ScanHttp {
     void setINZ(int id, String p_name, boolean state) {
         int i = 0;
         if(state) i = 1;
-        String url = "http:/" + ipAddrArduino + "/?changeIN=" + id + "," + p_name+","+i;
+        String url = "http:/" + ipAddrArduino + "/?setINZ=" + id + "," + p_name+","+i;
         refreshDevices(url);
     }
 
@@ -238,8 +240,6 @@ public class ScanHttp {
                         response = response.replaceAll("<html>", "");
                         response = response.replaceAll("</html>", "");
                         response = response.replaceFirst("\n", "");
-                        Log.d("tag", response);
-                        Log.d("tag", "aasddfdhfhjdfgdfggfdgdfgdfg");
                         if(response.length()>0) {
                             String line = response.substring(0, response.indexOf("\n"));
                             response = response.substring(response.indexOf("\n")).replaceFirst("\n", "");
@@ -268,9 +268,6 @@ public class ScanHttp {
                                         statesBool.add(false);
                                 }
 
-                                Log.d("", "" + id);
-                                Log.d("", name);
-                                Log.d("", "" + typ);
 
                                 String[] p_nameStates = new String[statesBool.size()];
                                 boolean[] p_bools = new boolean[statesBool.size()];
@@ -328,6 +325,8 @@ public class ScanHttp {
                             main.submenUE();
                         }
                     }
+
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -336,8 +335,8 @@ public class ScanHttp {
         });
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                10000,
+                0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }

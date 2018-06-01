@@ -48,7 +48,7 @@ public class NewArduino_Activity extends AppCompatActivity {
                 wifiConfig.preSharedKey = String.format("\"%s\"", pwObj.getText().toString());
 
                 WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
-//remember id
+
                 int netId = wifiManager.addNetwork(wifiConfig);
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(netId, true);
