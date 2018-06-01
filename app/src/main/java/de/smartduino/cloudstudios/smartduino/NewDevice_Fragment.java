@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,11 @@ public class NewDevice_Fragment extends Fragment {
         final EditText codeAn =(EditText) inf.findViewById(R.id.codeEin);
         final EditText codeAus =(EditText) inf.findViewById(R.id.codeAus);
 
-        Button b =(Button) inf.findViewById(R.id.button_addDevice);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button b =(Button) inf.findViewById(R.id.button_addDevice2);
+        b.setOnClickListener(new Button.OnClickListener() {
                                  @Override
                                  public void onClick(View v) {
+                                     Log.d("","pressed");
                                      if (rb_steckdose.isChecked()) {
                                          modus = 1;
                                      } else if (rb_lampe.isChecked()) {
@@ -44,9 +46,11 @@ public class NewDevice_Fragment extends Fragment {
                                      } else if (rb_fernseher.isChecked()) {
                                          modus = 3;
                                      }
-                                     //codeAn.getText().toString().to
-                                     //codeAus.getText()
-                                     //httpScanner.newDevTACN(modus,(long)22,t_name.getText());
+                                     long[] codeArr = new long[2];
+                                     codeArr[0] = Long.parseLong(codeAn.getText().toString());
+                                     codeArr[1] = Long.parseLong(codeAus.getText().toString());
+                                     httpScanner.newDevTACN(modus,codeArr,name.getText().toString());
+
                                  }});
 
         final LinearLayout expertModus= inf.findViewById(R.id.expertMode);
