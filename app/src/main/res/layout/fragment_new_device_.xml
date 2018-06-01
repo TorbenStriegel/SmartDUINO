@@ -97,7 +97,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button_addDevice2"
+                android:id="@+id/button_addDevice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Device" />

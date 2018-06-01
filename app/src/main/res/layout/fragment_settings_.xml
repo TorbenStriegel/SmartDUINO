@@ -46,5 +46,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Scan new Devices" />
+
+        <Button
+            android:id="@+id/button_standart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="standard" />
     </LinearLayout>
 </FrameLayout>

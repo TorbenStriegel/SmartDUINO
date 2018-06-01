@@ -2,6 +2,7 @@ package de.smartduino.cloudstudios.smartduino;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Hi Du EI", Snackbar.LENGTH_LONG)
+                httpScanner.getInfo();
+                Snackbar.make(view, "Refresh devices", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -52,20 +54,18 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        if (true){
         httpScanner = new ScanHttp(this);
-
-//-------------------------------------------------------------------------------------------------------------------------------------
-
-
-        geraetenamen[0] = "Licht";
-        geraetenamen[1] = "Licht";
-        geraetenamen[2] = "Licht";
-        Log.d("", "tetasjgd");
 
 
         if (!httpScanner.isArduinoInNetwork()) {
             Intent newArduiono = new Intent(this, NewArduino_Activity.class);
             startActivity(newArduiono);
+        }
+
+        TextView anzeige = (TextView) findViewById(R.id.textView_start);
+        //anzeige.setText(httpScanner.myDevices.length+" devices were found in your network.");
         }
         /*
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
