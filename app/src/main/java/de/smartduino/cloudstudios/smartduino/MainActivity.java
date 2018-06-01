@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String[] geraetenamen = new String[3];
-    ScanHttp httpScanner ;
+    static ScanHttp httpScanner ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        if (true){
-            Intent newArduiono = new Intent(this, NewArduino_Activity.class);
+        if (!httpScanner.isArduinoInNetwork()){
+            Intent newArduiono =new Intent(this, NewArduino_Activity.class);
             startActivity(newArduiono);
         }
         /*
@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity
         int a = 0;
         if(httpScanner.myDevices != null) {
             for (Device dev : httpScanner.myDevices) {
-                if (dev.getClass() == new Steckdose(0, null,null).getClass())
-                submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung),dev.name));
+                if (dev.getClass() == new Steckdose(0, null,null,null).getClass())
+                submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose),dev.name));
             }
         }
     }

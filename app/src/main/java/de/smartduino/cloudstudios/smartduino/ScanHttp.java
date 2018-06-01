@@ -76,20 +76,7 @@ public class ScanHttp {
         getInfo();
 
 
-        //setSSID("test");
-       /* setSSID("BOETZINGEN");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        setPW("42025916439220026669");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        save();*/
+
 
     }
 
@@ -103,6 +90,22 @@ public class ScanHttp {
         refreshDevices(url);
     }
 
+    void saveWlanConf(String p_ssid, String p_pw){
+        setSSID(p_ssid);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        setPW(p_pw);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        save();
+
+    }
 
     void setSSID(final String ssid) {
 
@@ -175,24 +178,6 @@ public class ScanHttp {
         queue.add(stringRequest);
     }
 
-    void newDevTS(int p_typ, long p_startcode) {
-        String url = "http:/" + ipAddrArduino + "/?newTS=" + p_typ + "," + p_startcode;
-        refreshDevices(url);
-    }
-
-    void newDevTSN(int p_typ, long p_startcode, String p_name) {
-        String url = "http:/" + ipAddrArduino + "/?newTSN=" + p_typ + "," + p_startcode + "," + p_name;
-        refreshDevices(url);
-    }
-
-    void newDevTAC(int p_typ, long[] longArr) {
-        String longArrString = "";
-        for (int i = 0; i < longArr.length; i++) {
-            longArrString += "," + longArr[i];
-        }
-        String url = "http:/" + ipAddrArduino + "/?newTAC=" + p_typ + "," + longArr.length + "" + longArrString;
-        refreshDevices(url);
-    }
 
     void newDevTACN(int p_typ, long[] longArr, String p_name) {
         String longArrString = "";
@@ -204,11 +189,15 @@ public class ScanHttp {
         refreshDevices(url);
     }
 
-    void changeIIZ(int id, int idx, boolean zustand) {
+    void changeIN(int id, String p_name) {
+        String url = "http:/" + ipAddrArduino + "/?changeIN=" + id + "," + p_name;
+        refreshDevices(url);
+    }
+
+    void setINZ(int id, String p_name, boolean state) {
         int i = 0;
-        if (zustand)
-            i = 1;
-        String url = "http:/" + ipAddrArduino + "/?changeIIZ=" + id + "," + idx + "," + i;
+        if(state) i = 1;
+        String url = "http:/" + ipAddrArduino + "/?changeIN=" + id + "," + p_name+","+i;
         refreshDevices(url);
     }
 
@@ -234,6 +223,11 @@ public class ScanHttp {
         return "";
     }
 
+    boolean isArduinoInNetwork(){
+        if(ipAddrArduino== null) return false;
+        else return true;
+    }
+
 
     void refreshDevices(String url) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -243,89 +237,96 @@ public class ScanHttp {
 
                         response = response.replaceAll("<html>", "");
                         response = response.replaceAll("</html>", "");
-                        response = response.replaceAll(" ", "");
                         response = response.replaceFirst("\n", "");
                         Log.d("tag", response);
-                        String line = response.substring(0, response.indexOf("\n"));
-                        response = response.substring(response.indexOf("\n")).replaceFirst("\n", "");
+                        Log.d("tag", "aasddfdhfhjdfgdfggfdgdfgdfg");
+                        if(response.length()>0) {
+                            String line = response.substring(0, response.indexOf("\n"));
+                            response = response.substring(response.indexOf("\n")).replaceFirst("\n", "");
 
-                        while (line.length() > 0) {
-                            Log.d("line", line);
-                            int intNull = 0;
-                            int id = Integer.parseInt(line.substring(intNull, line.indexOf("##")));
-                            line = line.substring(line.indexOf("##")).replaceFirst("##", "");
+                            while (line.length() > 0) {
+                                Log.d("line", line);
+                                int intNull = 0;
+                                int id = Integer.parseInt(line.substring(intNull, line.indexOf("##")));
+                                line = line.substring(line.indexOf("##")).replaceFirst("##", "");
 
-                            String name = line.substring(0, line.indexOf("##"));
-                            line = line.substring(line.indexOf("##")).replaceFirst("##", "");
-                            int typ = Integer.parseInt(line.substring(intNull, line.indexOf("#")));
-                            line = line.substring(line.indexOf("#")).replaceFirst("#", "");
-
-                            ArrayList<Boolean> statesBool = new ArrayList<Boolean>();
-                            while (line.indexOf("#") >= 0) {
-                                int state = Integer.parseInt(line.substring(intNull, line.indexOf("#")));
+                                String name = line.substring(0, line.indexOf("##"));
+                                line = line.substring(line.indexOf("##")).replaceFirst("##", "");
+                                int typ = Integer.parseInt(line.substring(intNull, line.indexOf("#")));
                                 line = line.substring(line.indexOf("#")).replaceFirst("#", "");
-                                if (state == 1)
-                                    statesBool.add(true);
-                                else
-                                    statesBool.add(false);
-                            }
 
-                            Log.d("", "" + id);
-                            Log.d("", name);
-                            Log.d("", "" + typ);
-
-                            boolean[] p_bools = new boolean[statesBool.size()];
-                            for (int i = 0; i < p_bools.length; i++) {
-                                p_bools[i] = statesBool.get(i);
-                            }
-                            boolean existing = false;
-                            if (myDevices != null) {
-                                for (Device dev : myDevices) {
-                                    if (dev.id == id) {
-                                        existing = true;
-                                        dev.changePara(p_bools);
-                                    }
+                                ArrayList<Boolean> statesBool = new ArrayList<Boolean>();
+                                ArrayList<String> statesName = new ArrayList<String>();
+                                while (line.indexOf("#") >= 0) {
+                                    statesName.add(line.substring(intNull, line.indexOf(":")));
+                                    line = line.substring(line.indexOf(":")).replaceFirst(":", "");
+                                    int state = Integer.parseInt(line.substring(intNull, line.indexOf("#")));
+                                    line = line.substring(line.indexOf("#")).replaceFirst("#", "");
+                                    if (state == 1)
+                                        statesBool.add(true);
+                                    else
+                                        statesBool.add(false);
                                 }
-                            }
 
-                            if (!existing) {
+                                Log.d("", "" + id);
+                                Log.d("", name);
+                                Log.d("", "" + typ);
+
+                                String[] p_nameStates = new String[statesBool.size()];
+                                boolean[] p_bools = new boolean[statesBool.size()];
+                                for (int i = 0; i < p_bools.length; i++) {
+                                    p_bools[i] = statesBool.get(i);
+                                    p_nameStates[i] = statesName.get(i);
+                                }
+                                boolean existing = false;
                                 if (myDevices != null) {
-                                    Device[] newDev = new Device[myDevices.length + 1];
-                                    for (int i = 0; i < myDevices.length; i++) {
-                                        newDev[i] = myDevices[i];
-                                    }
-
-
-                                    switch (typ) {
-                                        case 1:
-                                            newDev[myDevices.length] = new Steckdose(id, name, p_bools);
-                                            break;
-
-                                        default:
-                                            break;
-                                    }
-                                    myDevices = newDev;
-                                } else {
-                                    myDevices = new Device[1];
-                                    switch (typ) {
-                                        case 1:
-                                            myDevices[0] = new Steckdose(id, name, p_bools);
-                                            break;
-
-                                        default:
-                                            break;
+                                    for (Device dev : myDevices) {
+                                        if (dev.id == id) {
+                                            existing = true;
+                                            dev.changePara(p_bools);
+                                        }
                                     }
                                 }
 
+                                if (!existing) {
+                                    if (myDevices != null) {
+                                        Device[] newDev = new Device[myDevices.length + 1];
+                                        for (int i = 0; i < myDevices.length; i++) {
+                                            newDev[i] = myDevices[i];
+                                        }
+
+
+                                        switch (typ) {
+                                            case 1:
+                                                newDev[myDevices.length] = new Steckdose(id, name, p_bools, p_nameStates);
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+                                        myDevices = newDev;
+                                    } else {
+                                        myDevices = new Device[1];
+                                        switch (typ) {
+                                            case 1:
+                                                myDevices[0] = new Steckdose(id, name, p_bools, p_nameStates);
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+                                    }
+
+                                }
+                                if (response.indexOf("\n") >= 0) {
+                                    line = response.substring(intNull, response.indexOf("\n"));
+                                    response = response.substring(response.indexOf("\n")).replaceFirst("\n", "");
+                                } else {
+                                    line = "";
+                                }
                             }
-                            if (response.indexOf("\n") >= 0) {
-                                line = response.substring(intNull, response.indexOf("\n"));
-                                response = response.substring(response.indexOf("\n")).replaceFirst("\n", "");
-                            } else {
-                                line = "";
-                            }
+                            main.submenUE();
                         }
-                        main.submenUE();
                     }
                 }, new Response.ErrorListener() {
             @Override

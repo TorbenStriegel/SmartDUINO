@@ -21,6 +21,12 @@
             android:text="No compatible device was found on the network." />
 
         <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect to wlan : Arduino with password :" />
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +43,7 @@
             android:text="SSID:" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/ssidText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -51,12 +57,18 @@
             android:text="Password:" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/pwText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="Password"
             android:ems="10"
             android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
