@@ -28,7 +28,6 @@ public class IpScann implements Runnable {
 			InetAddress inet = InetAddress.getByName(ipAddress);
 			if(inet.isReachable(5000)) {
 				if(!(inet.getHostAddress().equals(InetAddress.getLocalHost().getHostAddress()))) {
-					Log.d("IPSCANN",inet.getHostAddress());
 					URL u = new URL("http://192.168." + local+"."+host+"/?getIP");
 					String r = new Scanner(u.openStream()).useDelimiter("\\Z").next();
 					if(r.contains("IP_Arduino"))scanObj.setIpAddr(inet);
