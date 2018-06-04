@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         TextView anzeige = (TextView) findViewById(R.id.textView_start);
         //anzeige.setText(httpScanner.myDevices.length+" devices were found in your network.");
         }
-        /*
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menu = navigationView.getMenu();
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht3"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
-        */
+
 
 //-------------------------------------------------------------------------------------------------------------------------------------
     }

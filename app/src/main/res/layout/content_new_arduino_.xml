@@ -24,7 +24,7 @@
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Connect to wlan : Arduino with password :" />
+            android:text='Connect to WIFI: "Arduino" / Password : "SmartDUINO"' />
 
         <TextView
             android:id="@+id/textView3"
