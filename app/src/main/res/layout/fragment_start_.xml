@@ -39,10 +39,11 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0 devices were found in your network." />
+            android:text="0 devices were found in your network."
+            android:textSize="24sp" />
 
     </LinearLayout>
 </FrameLayout>

@@ -15,12 +15,13 @@
         android:src="@android:color/background_light" />
 
     <LinearLayout
+        android:id="@+id/layoutSteckdose"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView_steckdose"
+            android:id="@+id/nameSteckdose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -30,13 +31,6 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="visible" />
-
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Power" />
 
     </LinearLayout>
 

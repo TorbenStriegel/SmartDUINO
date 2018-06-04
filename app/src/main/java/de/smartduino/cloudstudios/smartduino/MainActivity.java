@@ -1,38 +1,41 @@
 package de.smartduino.cloudstudios.smartduino;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String[] geraetenamen = new String[3];
-    ScanHttp httpScanner ;
+    static MainActivity main;
+    static ScanHttp httpScanner;
+    static Device aktuellDevice;
+    static int aktuelleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        main = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Hi Du EI", Snackbar.LENGTH_LONG)
+                httpScanner.getInfo();
+                Snackbar.make(view, "Refresh devices", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -50,22 +54,18 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-          httpScanner = new ScanHttp(this);
-
-//-------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-        geraetenamen[0] = "Licht";
-        geraetenamen[1] = "Licht";
-        geraetenamen[2] = "Licht";
-        Log.d("","tetasjgd");
-
-
-
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         if (true){
+        httpScanner = new ScanHttp(this);
+
+
+        if (!httpScanner.isArduinoInNetwork()) {
             Intent newArduiono = new Intent(this, NewArduino_Activity.class);
             startActivity(newArduiono);
+        }
+
+        TextView anzeige = (TextView) findViewById(R.id.textView_start);
+        //anzeige.setText(httpScanner.myDevices.length+" devices were found in your network.");
         }
         /*
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -83,16 +83,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    void submenUE(){
+    void submenUE() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menu = navigationView.getMenu();
+        menu.clear();
         Menu submenu = menu.addSubMenu("Geräte");
-        int a = 0;
-        if(httpScanner.myDevices != null) {
-            for (Device dev : httpScanner.myDevices) {
-                if (dev.getClass() == new Steckdose(0, null,null).getClass())
-                submenu.add(0, a, a, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung),dev.name));
+        if (httpScanner.myDevices != null) {
+            for (int i = 0; i< httpScanner.myDevices.length;i++) {
+                if (httpScanner.myDevices[i].getClass() == Steckdose.class)
+                    submenu.add(0, i, i, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), httpScanner.myDevices[i].name));
             }
         }
     }
@@ -129,27 +129,28 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int aktuelleID = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_neuesGerät) {
+        if (aktuelleID == R.id.action_neuesGerät) {
             FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_fragment, new NewDevice_Fragment());
             transaction.addToBackStack(null);
             transaction.commit();
-        }else if (id == R.id.action_settings) {
+        } else if (aktuelleID == R.id.action_settings) {
             FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_fragment, new Settings_Fragment());
             transaction.addToBackStack(null);
             transaction.commit();
-        }else if (id == R.id.action_impressum) {
+        } else if (aktuelleID == R.id.action_impressum) {
             FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_fragment, new Impressum_Fragment());
             transaction.addToBackStack(null);
-            transaction.commit();}
+            transaction.commit();
+        }
 
 
         return super.onOptionsItemSelected(item);
@@ -160,28 +161,34 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        aktuellDevice = httpScanner.myDevices[id];
+        aktuelleId = id;
+        Log.d("DevicenName",aktuellDevice.name);
 
-        /*if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        if (aktuellDevice.getClass() == Steckdose.class) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        }*/ if (id == 1) {
-
-             FragmentManager manager = getSupportFragmentManager();
+            FragmentManager manager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_fragment, new Steckdose_Fragment());
             transaction.addToBackStack(null);
             transaction.commit();
-            /*Steckdose fragment = new Steckdose();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.main_fragment, fragment).commit();*/
-        }
+
+        } else if (aktuellDevice.getClass() == Licht.class) {
+
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new Licht_Fragement());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } /*else if (httpScanner.myDevices[id].getClass() == Steckdose.class) {
+
+            FragmentManager manager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_fragment, new Fernseher_Fragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
