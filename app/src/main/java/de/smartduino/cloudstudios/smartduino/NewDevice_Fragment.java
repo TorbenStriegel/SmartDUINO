@@ -79,5 +79,7 @@ public class NewDevice_Fragment extends Fragment implements View.OnClickListener
         codeArr[0] = Long.parseLong(codeAn.getText().toString());
         codeArr[1] = Long.parseLong(codeAus.getText().toString());
         httpScanner.newDevTACN(modus,codeArr,name.getText().toString());
+        //neue Methode :
+        //        httpScanner.newDevTAN(modus,2,name.getText().toString());
     }
 }

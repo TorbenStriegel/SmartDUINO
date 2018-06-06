@@ -191,6 +191,13 @@ public class ScanHttp {
         refreshDevices(url);
     }
 
+    void newDevTAN(int p_typ, int nbrOFCode, String p_name) {
+
+        String url = "http:/" + ipAddrArduino + "/?newTAN=" + p_typ + "," + nbrOFCode
+                + "," + p_name;
+        refreshDevices(url);
+    }
+
     void changeIN(int id, String p_name) {
         String url = "http:/" + ipAddrArduino + "/?changeIN=" + id + "," + p_name;
         refreshDevices(url);
