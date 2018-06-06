@@ -20,6 +20,8 @@ import static de.smartduino.cloudstudios.smartduino.MainActivity.httpScanner;
 
 public class NewDevice_Fragment extends Fragment implements View.OnClickListener{
 
+     ToggleButton toggle;
+     LinearLayout expertModus;
      View inf;
      RadioButton rb_fernseher;
      RadioButton rb_steckdose;
@@ -45,14 +47,15 @@ public class NewDevice_Fragment extends Fragment implements View.OnClickListener
         Button b = inf.findViewById(R.id.button_addDevice);
         b.setOnClickListener(this);
 
-        final LinearLayout expertModus= inf.findViewById(R.id.expertMode);
-        ToggleButton toggle = (ToggleButton) inf.findViewById(R.id.toggleButton_Modus);
+        expertModus= inf.findViewById(R.id.expertMode);
+        toggle = (ToggleButton) inf.findViewById(R.id.toggleButton_Modus);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if(isChecked){
+                    expertModus.setVisibility(View.GONE);
+                }else{
                     expertModus.setVisibility(View.VISIBLE);
-                } else {
-                    expertModus.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -71,6 +74,7 @@ public class NewDevice_Fragment extends Fragment implements View.OnClickListener
         } else if (rb_fernseher.isChecked()) {
             modus = 3;
         }
+
         long[] codeArr = new long[2];
         codeArr[0] = Long.parseLong(codeAn.getText().toString());
         codeArr[1] = Long.parseLong(codeAus.getText().toString());
