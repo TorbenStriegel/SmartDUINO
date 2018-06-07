@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,13 +50,28 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+
+        Intent intent = new Intent();
+        int WifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
+        if (WifiState == WifiManager.WIFI_STATE_ENABLED){
+
+            Toast.makeText(this,"WI-FI enabled",Toast.LENGTH_LONG).show();
+        }
+        else if (WifiState == WifiManager.WIFI_STATE_ENABLING){
+
+            Toast.makeText(this,"WI-FI enabling",Toast.LENGTH_LONG).show();
+        }
+        else Toast.makeText(this,"With WI-FI connected",Toast.LENGTH_LONG).show();
+
         if (true){
+            Toast.makeText(this,"WI-FI disabled",Toast.LENGTH_LONG).show();
         httpScanner = new ScanHttp(this);
 
 
@@ -68,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         //anzeige.setText(httpScanner.myDevices.length+" devices were found in your network.");
         }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+       /* NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menu = navigationView.getMenu();
         Menu submenu = menu.addSubMenu("Geräte");
@@ -76,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht2"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.licht), "Licht3"));
         submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), "Steckdose1"));
-        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));
+        submenu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.fernbedienung), "TV1"));*/
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------
@@ -95,6 +111,9 @@ public class MainActivity extends AppCompatActivity
                     submenu.add(0, i, i, menuIconWithText(getResources().getDrawable(R.mipmap.steckdose), httpScanner.myDevices[i].name));
             }
         }
+
+        TextView anzeige = (TextView) findViewById(R.id.textView_start);
+        anzeige.setText(httpScanner.myDevices.length+" devices were found in your network.");
     }
 
     private CharSequence menuIconWithText(Drawable icon, String title) {                            // ICON und TEXT zusammenfügen

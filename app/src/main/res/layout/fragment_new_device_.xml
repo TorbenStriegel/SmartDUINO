@@ -28,8 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Expert"
-                android:textOff="Easy Mode"
-                android:textOn="Expert Mode" />
+                android:textOff="Expert Mode"
+                android:textOn="Easy Mode" />
 
             <EditText
                 android:id="@+id/gereateName"

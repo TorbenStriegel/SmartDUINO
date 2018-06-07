@@ -3,6 +3,7 @@ package de.smartduino.cloudstudios.smartduino;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,6 @@ public class NewDevice_Fragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Log.d("","pressed");
         if (rb_steckdose.isChecked()) {
             modus = 1;
         } else if (rb_lampe.isChecked()) {
@@ -75,11 +75,24 @@ public class NewDevice_Fragment extends Fragment implements View.OnClickListener
             modus = 3;
         }
 
-        long[] codeArr = new long[2];
-        codeArr[0] = Long.parseLong(codeAn.getText().toString());
-        codeArr[1] = Long.parseLong(codeAus.getText().toString());
-        httpScanner.newDevTACN(modus,codeArr,name.getText().toString());
-        //neue Methode :
-        //        httpScanner.newDevTAN(modus,2,name.getText().toString());
+        if(toggle.isChecked()) {
+            //easy Modus
+            httpScanner.newDevTAN(modus,2,name.getText().toString());
+            Log.d("","Easy Modus");
+        }else{
+            //expert Modus
+            Log.d("","Expert Modus");
+            if(codeAn.getText().toString().matches("")||codeAus.getText().toString().matches("")) {
+                Snackbar.make(inf, "Please enter both codes or usr the Easy Mode!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }else{
+                long[] codeArr = new long[2];
+                codeArr[0] = Long.parseLong(codeAn.getText().toString());
+                codeArr[1] = Long.parseLong(codeAus.getText().toString());
+                httpScanner.newDevTACN(modus,codeArr,name.getText().toString());
+                Log.d("","Expert Modus");
+            }
+        }
+
     }
 }
